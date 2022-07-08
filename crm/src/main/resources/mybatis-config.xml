@@ -3,21 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <!--设置日志-->
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
-
     <typeAliases>
-        <package name="org.zuel.crm.model"/>
+        <package name="com.bjpowernode.crm.model"/>
     </typeAliases>
-
-
-
-    <!--指定其他mapper文件的位置：
-        其他其他mapper文件目的是找到其他文件的sql语句
-    -->
     <mappers>
-        <package name="org.zuel.crm.mapper"/>
+        <package name="com.bjpowernode.crm.mapper"/>
     </mappers>
 </configuration>
