@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.oa.business.mapper.NoteMapper">
+
+    <resultMap id="BaseResultMap" type="com.cn.oa.domain.Note">
+            <id property="nid" column="nid" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="context" column="context" jdbcType="VARCHAR"/>
+            <result property="startdate" column="startdate" jdbcType="DATE"/>
+            <result property="enddate" column="enddate" jdbcType="DATE"/>
+            <result property="length" column="length" jdbcType="FLOAT"/>
+            <result property="subdate" column="subdate" jdbcType="DATE"/>
+            <result property="estatus" column="estatus" jdbcType="INTEGER"/>
+            <result property="reldate" column="reldate" jdbcType="DATE"/>
+            <result property="eid" column="eid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        nid,title,context,
+        startdate,enddate,length,
+        subdate,estatus,reldate,
+        eid
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from note
+        where  nid = #{nid,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from note
+        where  nid = #{nid,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="nid" keyProperty="nid" parameterType="com.cn.oa.domain.Note" useGeneratedKeys="true">
+        insert into note
+        ( nid,title,context
+        ,startdate,enddate,length
+        ,subdate,estatus,reldate
+        ,eid)
+        values (#{nid,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{context,jdbcType=VARCHAR}
+        ,#{startdate,jdbcType=DATE},#{enddate,jdbcType=DATE},#{length,jdbcType=FLOAT}
+        ,#{subdate,jdbcType=DATE},#{estatus,jdbcType=INTEGER},#{reldate,jdbcType=DATE}
+        ,#{eid,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="nid" keyProperty="nid" parameterType="com.cn.oa.domain.Note" useGeneratedKeys="true">
+        insert into note
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="nid != null">nid,</if>
+                <if test="title != null">title,</if>
+                <if test="context != null">context,</if>
+                <if test="startdate != null">startdate,</if>
+                <if test="enddate != null">enddate,</if>
+                <if test="length != null">length,</if>
+                <if test="subdate != null">subdate,</if>
+                <if test="estatus != null">estatus,</if>
+                <if test="reldate != null">reldate,</if>
+                <if test="eid != null">eid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="nid != null">#{nid,jdbcType=INTEGER},</if>
+                <if test="title != null">#{title,jdbcType=VARCHAR},</if>
+                <if test="context != null">#{context,jdbcType=VARCHAR},</if>
+                <if test="startdate != null">#{startdate,jdbcType=DATE},</if>
+                <if test="enddate != null">#{enddate,jdbcType=DATE},</if>
+                <if test="length != null">#{length,jdbcType=FLOAT},</if>
+                <if test="subdate != null">#{subdate,jdbcType=DATE},</if>
+                <if test="estatus != null">#{estatus,jdbcType=INTEGER},</if>
+                <if test="reldate != null">#{reldate,jdbcType=DATE},</if>
+                <if test="eid != null">#{eid,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cn.oa.domain.Note">
+        update note
+        <set>
+                <if test="title != null">
+                    title = #{title,jdbcType=VARCHAR},
+                </if>
+                <if test="context != null">
+                    context = #{context,jdbcType=VARCHAR},
+                </if>
+                <if test="startdate != null">
+                    startdate = #{startdate,jdbcType=DATE},
+                </if>
+                <if test="enddate != null">
+                    enddate = #{enddate,jdbcType=DATE},
+                </if>
+                <if test="length != null">
+                    length = #{length,jdbcType=FLOAT},
+                </if>
+                <if test="subdate != null">
+                    subdate = #{subdate,jdbcType=DATE},
+                </if>
+                <if test="estatus != null">
+                    estatus = #{estatus,jdbcType=INTEGER},
+                </if>
+                <if test="reldate != null">
+                    reldate = #{reldate,jdbcType=DATE},
+                </if>
+                <if test="eid != null">
+                    eid = #{eid,jdbcType=INTEGER},
+                </if>
+        </set>
+        where   nid = #{nid,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cn.oa.domain.Note">
+        update note
+        set 
+            title =  #{title,jdbcType=VARCHAR},
+            context =  #{context,jdbcType=VARCHAR},
+            startdate =  #{startdate,jdbcType=DATE},
+            enddate =  #{enddate,jdbcType=DATE},
+            length =  #{length,jdbcType=FLOAT},
+            subdate =  #{subdate,jdbcType=DATE},
+            estatus =  #{estatus,jdbcType=INTEGER},
+            reldate =  #{reldate,jdbcType=DATE},
+            eid =  #{eid,jdbcType=INTEGER}
+        where   nid = #{nid,jdbcType=INTEGER} 
+    </update>
+
+    <select id="selectAllNote" resultMap="BaseResultMap">
+        select n.*,e.realname from note n join employee e on n.eid = e.eid where n.estatus=#{estatus}
+    </select>
+
+    <select id="selectRecord" resultMap="BaseResultMap">
+        select n.*,e.realname from note n join employee e on n.eid = e.eid
+    </select>
+
+</mapper>

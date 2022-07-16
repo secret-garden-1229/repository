@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.oa.setting.mapper.DepartMapper1">
+
+    <resultMap id="BaseResultMap" type="com.cn.oa.domain.Depart">
+            <id property="did" column="did" jdbcType="INTEGER"/>
+            <result property="dname" column="dname" jdbcType="VARCHAR"/>
+            <result property="duty" column="duty" jdbcType="VARCHAR"/>
+            <result property="credate" column="credate" jdbcType="DATE"/>
+            <result property="dstatus" column="dstatus" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        did,dname,duty,
+        credate,dstatus
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from depart
+        where  did = #{did,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from depart
+        where  did = #{did,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="did" keyProperty="did" parameterType="com.cn.oa.domain.Depart" useGeneratedKeys="true">
+        insert into depart
+        ( did,dname,duty
+        ,credate,dstatus)
+        values (#{did,jdbcType=INTEGER},#{dname,jdbcType=VARCHAR},#{duty,jdbcType=VARCHAR}
+        ,#{credate,jdbcType=DATE},#{dstatus,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="did" keyProperty="did" parameterType="com.cn.oa.domain.Depart" useGeneratedKeys="true">
+        insert into depart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="did != null">did,</if>
+                <if test="dname != null">dname,</if>
+                <if test="duty != null">duty,</if>
+                <if test="credate != null">credate,</if>
+                <if test="dstatus != null">dstatus,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="did != null">#{did,jdbcType=INTEGER},</if>
+                <if test="dname != null">#{dname,jdbcType=VARCHAR},</if>
+                <if test="duty != null">#{duty,jdbcType=VARCHAR},</if>
+                <if test="credate != null">#{credate,jdbcType=DATE},</if>
+                <if test="dstatus != null">#{dstatus,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cn.oa.domain.Depart">
+        update depart
+        <set>
+                <if test="dname != null">
+                    dname = #{dname,jdbcType=VARCHAR},
+                </if>
+                <if test="duty != null">
+                    duty = #{duty,jdbcType=VARCHAR},
+                </if>
+                <if test="credate != null">
+                    credate = #{credate,jdbcType=DATE},
+                </if>
+                <if test="dstatus != null">
+                    dstatus = #{dstatus,jdbcType=INTEGER},
+                </if>
+        </set>
+        where   did = #{did,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cn.oa.domain.Depart">
+        update depart
+        set 
+            dname =  #{dname,jdbcType=VARCHAR},
+            duty =  #{duty,jdbcType=VARCHAR},
+            credate =  #{credate,jdbcType=DATE},
+            dstatus =  #{dstatus,jdbcType=INTEGER}
+        where   did = #{did,jdbcType=INTEGER} 
+    </update>
+    <select id="selectAllByDstatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from depart
+        where
+        dstatus = #{dstatus,jdbcType=NUMERIC}
+    </select>
+</mapper>

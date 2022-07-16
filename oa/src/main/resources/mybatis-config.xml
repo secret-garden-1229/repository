@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--设置日志-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+
+        <!--开启mybatis二级缓存-->
+        <setting name="cacheEnabled" value="true"></setting>
+
+    </settings>
+
+    <!--启用分页插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="param1" value="value1"/>
+        </plugin>
+    </plugins>
+    
+    <mappers>
+        <package name="com.cn.oa.business.mapper"/>
+        <package name="com.cn.oa.setting.mapper"/>
+    </mappers>
+    
+</configuration>
