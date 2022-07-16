@@ -1,13 +1,10 @@
 package fileupload;
 
+
 import constant.FileConstant;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.crypto.Data;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -20,6 +17,7 @@ public class FileUploadUtils {
     private String[]arrayFormat= FileConstant.EXCEX.getAllFileFormat();
     private  String format;
     private MultipartFile multipartFile;
+    private static ThreadLocal<String> threadLocal=new ThreadLocal<>();
 
     public FileUploadUtils() {
     }
@@ -32,22 +30,38 @@ public class FileUploadUtils {
         this.multipartFile=multipartFile;
     }
 
+    public static String getPath(){
+       return threadLocal.get();
+    }
 
     /**
      * 对上传的我文件类型进行判断
      * */
-    private Object verifyFileType(MultipartFile multipartFile){
+    private void verifyFileType(MultipartFile multipartFile){
         if (multipartFile.isEmpty()){
-            return "上传的文件不能为空！";
+            return ;
         }
         String type = multipartFile.getContentType();
         Integer index =type.indexOf("/");
         String formats = type.substring(index+1, type.length()).toLowerCase();
-        if (!Arrays.asList(arrayFormat).contains(formats)){
-            return  "文件格式不对";
+
+
+
+        boolean flag = this.isInclude(this.arrayFormat, formats);
+
+        if (flag){
+            this.format=formats;
         }
-        this.format=formats;
-        return formats;
+
+
+    }
+
+    private boolean isInclude(String [] array,String one ){
+        for (String s : array) {
+            if (s.equals(one)) return  true;
+        }
+
+        return false;
     }
 
     /**
@@ -63,8 +77,8 @@ public class FileUploadUtils {
     /**
      * 将一个文件上传到服务器上
      * */
-    public  void saveFile() throws IOException {
-        String type = (String) this.verifyFileType(multipartFile);
+    public  void saveFile() throws Exception {
+        this.verifyFileType(this.multipartFile);
         String path =this.getClass().getClassLoader().getResource("").getPath();
         path=path+"imgFile";
         File file = new File(path);
@@ -73,6 +87,7 @@ public class FileUploadUtils {
         }
         path=path+"/"+rename();
         File file2 = new File(path);
+        threadLocal.set(path);
         multipartFile.transferTo(file2);
     }
 

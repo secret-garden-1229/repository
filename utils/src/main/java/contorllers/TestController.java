@@ -19,7 +19,7 @@ public class TestController {
     }
 
     @PostMapping(value = "/uploac")
-    public void upload(@RequestBody MultipartFile multipartFile) throws IOException {
+    public void upload(@RequestBody MultipartFile multipartFile) throws Exception {
         new FileUploadUtils(multipartFile).saveFile();
     }
 
