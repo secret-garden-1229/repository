@@ -22,9 +22,13 @@ public class NoteController {
     private NoteService noteService;
 
     @GetMapping(value = "noteController/selectAllNote")
-    public ModelAndView selectAllNote(Integer estatus){
+    public ModelAndView selectAllNote(Integer estatus,HttpSession session){
         ModelAndView modelAndView=new ModelAndView();
-        List<Note> notes = noteService.selectAllNote( estatus);
+        Employee emplyee = (Employee) session.getAttribute("user");
+        Integer did=emplyee.getDid();
+        Integer position=emplyee.getPosition();
+        Integer eid= emplyee.getEid();
+        List<Note> notes = noteService.selectAllNote(did,position,eid,estatus);
         modelAndView.addObject("notes",notes);
         modelAndView.setViewName("/leave.jsp");
         return modelAndView;

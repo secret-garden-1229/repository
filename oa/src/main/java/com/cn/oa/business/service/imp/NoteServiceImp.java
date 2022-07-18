@@ -15,8 +15,8 @@ public class NoteServiceImp implements NoteService {
     private NoteMapper noteMapper;
 
     @Override
-    public List<Note> selectAllNote(Integer estatus) {
-        return noteMapper.selectAllNote( estatus);
+    public List<Note> selectAllNote(Integer did,Integer position,Integer eid,Integer estatus) {
+        return noteMapper.selectAllNote(did,position,eid,estatus);
     }
 
     @Override

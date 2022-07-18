@@ -10,7 +10,7 @@ import java.util.List;
 public interface NoteMapper {
 
 
-    List<Note> selectAllNote(@Param("estatus") Integer estatus);
+    List<Note> selectAllNote(@Param("did")Integer did,@Param("position")Integer position,@Param("eid")Integer eid,@Param("estatus") Integer estatus);
     List<Note> selectRecord();
 
     Integer insertSelective(Note note);

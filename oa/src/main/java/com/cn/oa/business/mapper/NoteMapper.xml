@@ -122,7 +122,20 @@
     </update>
 
     <select id="selectAllNote" resultMap="BaseResultMap">
-        select n.*,e.realname from note n join employee e on n.eid = e.eid where n.estatus=#{estatus}
+        select n.*,e.realname from note n join employee e on n.eid = e.eid
+        <where>
+            <if test="estatus=='' or estatus==null">
+                and n.eid=#{eid}
+            </if>
+            <if test="estatus!='' and estatus!=null">
+                <if test="position==0">
+                    and e.position=1
+                </if>
+                <if test="position==1">
+                    and e.position=2 and e.did={did}
+                </if>
+            </if>
+        </where>
     </select>
 
     <select id="selectRecord" resultMap="BaseResultMap">
