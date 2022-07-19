@@ -8,24 +8,24 @@
 		<title>首页</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/cropper.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/sitelogo.css" />
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/cropper.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/sitelogo.css" />
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-
-		<script src="js/jquery-1.11.3.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/cropper.js"></script>
-		<script src="js/sitelogo.js"></script>
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/cropper.js"></script>
+	<script src="js/sitelogo.js"></script>
 
 
-		<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> -->
-		<link rel="stylesheet" type="text/css" href="css/vendor.css">
-		<link rel="stylesheet" type="text/css" href="css/theme.css">
-		<link rel="stylesheet" type="text/css" href="css/utility.css">
-		<link rel="stylesheet" type="text/css" href="css/custom.css">
-		<link rel="shortcut icon" href="img/favicon.ico">
+	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/vendor.css">
+	<link rel="stylesheet" type="text/css" href="css/theme.css">
+	<link rel="stylesheet" type="text/css" href="css/utility.css">
+	<link rel="stylesheet" type="text/css" href="css/custom.css">
+	<link rel="shortcut icon" href="img/favicon.ico">
+
 
 		<style>
 			.nav li {
@@ -91,19 +91,26 @@
 						<a  class="accordion-toggle" href="setting/selectEfficientDepartment?dstatus=0" target="right"> <span class="glyphicons glyphicons-user"></span><span
 							 class="sidebar-title">部门管理</span><span class="caret"></span></a>
 					</li>
+					<c:if test="${user.position<2}">
 					<li>
 						<a class="accordion-toggle" href="userController/selectEmployee?estatus=0" target="right"><span class="glyphicons glyphicons-user"></span><span
 							 class="sidebar-title">用户管理</span><span class="caret"></span></a>
 					</li>
-
+					</c:if>
 					<li>
+						<c:if test="${user.position<2}">
 						<a class="accordion-toggle" href="noteController/selectAllNote?estatus=0" target="right"><span class="glyphicons glyphicons-user"></span><span
 							 class="sidebar-title">请假管理</span><span class="caret"></span></a>
+						</c:if>
+						<c:if test="${user.position==2}">
+							<a class="accordion-toggle" href="noteController/selectAllNote?estatus=0" target="right"><span class="glyphicons glyphicons-user"></span><span
+									class="sidebar-title">请假管理</span><span class="caret"></span></a>
+						</c:if>
 					</li>
 					<li>
 						<%--admin-content--%>
 						<a class="accordion-toggle" href="javascript:void(0)" onclick="updatePwd('修改密码',1)" target="right"><span class="glyphicons glyphicons-user"></span><span
-							 class="sidebar-title">修改密码</span><span class="caret"></span></a>
+						class="sidebar-title">修改密码</span><span class="caret"></span></a>
 					</li>
 				</ul>
 			</div>
@@ -113,8 +120,7 @@
 			<iframe scrolling="yes" frameborder="0" name="right" src="myinfo.jsp" width="100%" height="900"></iframe>
 		</div>
 	</div>
-	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="myplugs/js/plugs.js"></script>
+<script type="text/javascript" src="myplugs/js/plugs.js"></script>
 	<script type="text/javascript">
 		//添加编辑弹出层
 		function updatePwd(title, id) {
@@ -204,7 +210,6 @@
 	</div>
 
 	<div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
-<script type="text/javascript" src="js/jquery-3.6.0.min.js" ></script>
 	<script src="js/html2canvas.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		//做个下简易的验证  大小 格式

@@ -21,7 +21,7 @@
                     password:password
                 },
                 success:function (data) {
-                    if (data=='true'||data==true){
+                    if (data=='true'|data==true){
                         window.location.href='setting/toIndex';
                     }else {
                         alert("请确定找密码正确！")

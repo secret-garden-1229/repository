@@ -22,16 +22,18 @@
 				size==checkSize?$("#chkAll").prop("checked",true):$("#chkAll").prop("checked",false);
 			})
 
-			/*noteController/selectAllNote*/
+			/** 待审批*/
 			$("#pendingBtn").click(function () {
-				window.location.href="noteController/selectAllNote?estatus=1"
+				window.location.href="noteController/selectAllNote?estatus=2"
 			})
 
+			/** 已审批*/
 			$("#havedPendingBtn").click(function () {
-				window.location.href="noteController/selectAllNote?estatus=0"
+				window.location.href="noteController/selectAllNote?estatus=1"
 			})
+			/** 请假记录*/
 			$("#leaveBtn").click(function () {
-				window.location.href="selectRecord";
+				window.location.href="noteController/selectAllNote?estatus=0";
 			})
 
 			$("#tUser button[name=agreeBtn]").click(function () {
@@ -107,8 +109,10 @@
 						<div class="am-btn-group am-btn-group-xs">
 							<button type="button" class="am-btn am-btn-default btnAdd"><span class="am-icon-plus"></span>申请请假</button>
 							<button type="button" id="leaveBtn" style="margin-left: 20px;" class="am-btn am-btn-default btnFindNotes"><span class="am-icon-archive"></span> 请假记录 </button>
+							<c:if test="${user.position<2}">
 							<button type="button" id="pendingBtn" style="margin-left: 20px;" class="am-btn am-btn-default btnFindNoCheck"><span class="am-icon-archive"></span> 待审批</button>
 							<button type="button" id="havedPendingBtn" style="margin-left: 20px;" class="am-btn am-btn-default btnFindCheck"><span class="am-icon-archive"></span> 已审批 </button>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -127,11 +131,13 @@
 									<th class="table-dname">请假开始日期</th>
 									<th class="table-role">请假结束日期</th>
 									<th class="table-role">主管审批状态</th>
+									<c:if test="${user.position<2}">
 									<th class="table-set">操作</th>
+									</c:if>
 								</tr>
 							</thead>
 							<tbody id="tUser">
-							<c:forEach items="${notes}" var="note">
+							<c:forEach items="${notes.list}" var="note">
 								<tr>
 									<td><input type="checkbox" name="chks" ></td>
 									<td>${note.nid}</td>
@@ -141,20 +147,26 @@
 									<td class="am-hide-sm-only"><span class="am-badge  am-badge-danger "><fmt:formatDate value="${note.enddate}" pattern="yyyy年MM月dd日" /></span></td>
 									<td><span class="am-badge  am-badge-danger "><fmt:formatDate value="${note.enddate}" pattern="yyyy年MM月dd日" /></span></td>
 									<c:if test="${note.estatus==0}">
-									<td>同意</td>
+										<td>待审批</td>
 									</c:if>
 									<c:if test="${note.estatus==1}">
-										<td>打回</td>
+									<td>同意</td>
 									</c:if>
 									<c:if test="${note.estatus==2}">
+										<td>打回</td>
+									</c:if>
+									<c:if test="${note.estatus==3}">
 										<td>不同意</td>
 									</c:if>
+
 									<td>
 										<div class="am-btn-toolbar">
 											<div class="am-btn-group am-btn-group-xs">
+												<c:if test="${user.position<2}">
 												<button name="agreeBtn" type="button" agreeId="${note.nid}" id="depart_24" class="am-btn am-btn-default am-btn-xs am-text-secondary btnedit"><span class="am-icon-pencil-square-o"></span> 同意</button>
 												<button name="returnBtn" type="button" class="am-btn am-btn-default am-btn-xs am-text-danger amt-hide-sm-only"><span class="am-icon-trash-o"></span> 打回</button>
 												<button name="noagreeBtn" type="button" id="depart_24" class="am-btn am-btn-default am-btn-xs am-text-secondary btnedit"><span class="am-icon-pencil-square-o"></span> 不同意</button>
+												</c:if>
 											</div>
 										</div>
 									</td>
@@ -164,7 +176,7 @@
 							</tbody>
 						</table>
 						<div class="am-cf" style="margin-right: 30px;">
-							共 4 条记录
+							共 ${notes.size} 条记录
 							<div class="am-fr">
 								<ul class="am-pagination">
 									<li class="am-disabled">
@@ -172,18 +184,6 @@
 									</li>
 									<li class="am-active">
 										<a href="#">1</a>
-									</li>
-									<li>
-										<a href="#">2</a>
-									</li>
-									<li>
-										<a href="#">3</a>
-									</li>
-									<li>
-										<a href="#">4</a>
-									</li>
-									<li>
-										<a href="#">5</a>
 									</li>
 									<li>
 										<a href="#">»</a>
@@ -200,7 +200,7 @@
 		<script type="text/javascript" src="js/jquery-1.11.3.min.js" ></script>
 		<script type="text/javascript" src="myplugs/js/plugs.js" ></script>
 		<script>
-			$(function() {			
+			$(function() {
 				$(".btnAdd").click(function() {
 					$.jq_Panel({
 						title: "申请请假",

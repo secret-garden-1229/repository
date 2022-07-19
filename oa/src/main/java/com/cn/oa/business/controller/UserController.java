@@ -30,8 +30,6 @@ public class UserController {
  * */
     @GetMapping(value = "userController/selectEmployee")
     public ModelAndView selectEmployee(@RequestParam Map<String,String> map, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize",defaultValue = "4")Integer pageSize){
-        System.out.println("==========");
-        System.out.println(map);
         PageHelper.startPage(pageNum,pageSize);
         ModelAndView modelAndView=new ModelAndView();
         List<Employee> list = employeeSerivce.selectEmpoyee(map);

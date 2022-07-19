@@ -81,29 +81,26 @@
 							</tbody>
 						</table>
 						<div class="am-cf" style="margin-right: 30px;">
-							共 4 条记录
+							共 ${pages.size} 条记录
 							<div class="am-fr">
 								<ul class="am-pagination">
-									<li class="am-disabled">
-										<a href="#">«</a>
+									<li class="am-disableds">
+										<c:if test="${pages.hasPreviousPage}">
+											<a href="userController/selectEmployee?pageNum=${pages.prePage}">«</a>
+										</c:if>
+
+										<c:if test="${pages.hasPreviousPage==false}">
+											<a href="javascript:;">«</a>
+										</c:if>
 									</li>
-									<li class="am-active">
-										<a href="#">1</a>
-									</li>
+
 									<li>
-										<a href="#">2</a>
-									</li>
-									<li>
-										<a href="#">3</a>
-									</li>
-									<li>
-										<a href="#">4</a>
-									</li>
-									<li>
-										<a href="#">5</a>
-									</li>
-									<li>
-										<a href="#">»</a>
+										<c:if test="${pages.hasNextPage}">
+											<a href="userController/selectEmployee?pageNum=${pages.nextPage}">»</a>
+										</c:if>
+										<c:if test="${pages.hasNextPage==false}">
+											<a href="javascript:;">»</a>
+										</c:if>
 									</li>
 								</ul>
 							</div>

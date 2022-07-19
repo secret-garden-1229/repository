@@ -124,15 +124,28 @@
     <select id="selectAllNote" resultMap="BaseResultMap">
         select n.*,e.realname from note n join employee e on n.eid = e.eid
         <where>
-            <if test="estatus=='' or estatus==null">
+            <if test="estatus==''">
                 and n.eid=#{eid}
             </if>
             <if test="estatus!='' and estatus!=null">
                 <if test="position==0">
                     and e.position=1
+                    <if test="estatus==1">
+                        and n.estatus>0
+                    </if>
+
+                    <if test="estatus==2">
+                        and n.estatus=0
+                    </if>
                 </if>
                 <if test="position==1">
                     and e.position=2 and e.did={did}
+                    <if test="estatus==1">
+                        and n.estatus>0
+                    </if>
+                    <if test="estatus==2">
+                        and n.estatus=0
+                    </if>
                 </if>
             </if>
         </where>

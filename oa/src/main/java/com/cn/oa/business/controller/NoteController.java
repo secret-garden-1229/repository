@@ -3,6 +3,8 @@ package com.cn.oa.business.controller;
 import com.cn.oa.business.service.NoteService;
 import com.cn.oa.domain.Employee;
 import com.cn.oa.domain.Note;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +24,16 @@ public class NoteController {
     private NoteService noteService;
 
     @GetMapping(value = "noteController/selectAllNote")
-    public ModelAndView selectAllNote(Integer estatus,HttpSession session){
+    public ModelAndView selectAllNote(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize",defaultValue = "4")Integer pageSize,@RequestParam(required = false,defaultValue = "") Integer estatus,HttpSession session){
         ModelAndView modelAndView=new ModelAndView();
+        PageHelper.startPage(pageNum,pageSize);
         Employee emplyee = (Employee) session.getAttribute("user");
         Integer did=emplyee.getDid();
         Integer position=emplyee.getPosition();
         Integer eid= emplyee.getEid();
         List<Note> notes = noteService.selectAllNote(did,position,eid,estatus);
-        modelAndView.addObject("notes",notes);
+        PageInfo<Note> pageInfo=new PageInfo<>(notes);
+        modelAndView.addObject("notes",pageInfo);
         modelAndView.setViewName("/leave.jsp");
         return modelAndView;
     }
