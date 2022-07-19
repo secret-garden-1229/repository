@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.shangmimall.mapper.ItemsMapper">
+
+    <resultMap id="BaseResultMap" type="com.cn.shangmimall.domain.Items">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="price" column="price" jdbcType="INTEGER"/>
+            <result property="amount" column="amount" jdbcType="INTEGER"/>
+            <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+            <result property="goodId" column="good_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,price,amount,
+        order_id,good_id
+    </sql>
+</mapper>
